@@ -1,0 +1,21 @@
+version: '3.1'
+name: nestcommerce
+services:
+  mongo:
+    container_name: dev-mongo
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: nestcommerce
+      MONGO_INITDB_ROOT_PASSWORD: n3stc0mm3rc3
+      MONGO_INITDB_DATABASE: nestcommerce
+    ports:
+      - 27017:27017
+    volumes:
+      - ./dev-scripts:/docker-entrypoint-initdb.d/
+
+  redis:
+    container_name: dev-redis
+    image: redis:7.2
+    ports:
+      - 6379:6379
