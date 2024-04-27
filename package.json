@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dc:up:dev": "docker compose -f docker/docker.compose.dev.yaml up -d",
+    "dev": "npm run dc:up:dev && turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
