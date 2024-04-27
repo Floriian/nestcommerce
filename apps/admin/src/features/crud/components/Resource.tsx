@@ -16,7 +16,7 @@ export function Resource({
     return () => {
       dispatch(addCRUD({ name }));
     };
-  }, [name]);
+  }, [name, dispatch]);
   return (
     <Routes>
       <Route index path={name} element={<CrudPanel resource={name} />} />

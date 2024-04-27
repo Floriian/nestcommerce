@@ -19,7 +19,7 @@ export function CrudPanel({ resource }: Props) {
   const [data, setData] = useState<BaseEntity[]>();
   const navigate = useNavigate();
 
-  const handleClick = (id: string) => navigate(`${resource}/${id}`);
+  const handleClick = (id: string) => navigate(`${id}`);
   useEffect(() => {
     const getData = async () => {
       const response = await axiosInstance.get<BaseEntity[]>(resource);

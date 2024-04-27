@@ -1,13 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, Model } from 'mongoose';
 import { Category } from 'src/category/entities/category.entity';
-import { UniqueProp } from 'src/common/database/UniqueProp.decorator';
+import { BaseEntity } from 'src/common/database/BaseEntity';
 
 @Schema({ timestamps: true })
-export class Product {
-  @UniqueProp()
-  name: string;
-
+export class Product extends BaseEntity {
   @Prop({ required: true })
   price: number;
 
