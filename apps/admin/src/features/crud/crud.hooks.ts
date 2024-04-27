@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../app/";
+import { useAppDispatch, useAppSelector } from "@app/store";
 import { getCrud } from "./crud.selector";
 import { addCRUD } from "./crud.slice";
 import { CrudResource } from "./types";

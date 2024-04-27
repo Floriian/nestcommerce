@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import { CrudResource } from "../types";
 import { useEffect } from "react";
-import { useAppDispatch } from "../../../app/";
-import { addCRUD } from "../crud.slice";
 import { CrudPanel } from "./CrudPanel";
+import { CrudResource } from "../types";
+import { useAppDispatch } from "@app/store";
+import { addCRUD } from "../crud.slice";
 
 export function Resource({
   name,
@@ -13,10 +13,12 @@ export function Resource({
 }: CrudResource) {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    return () => dispatch(addCRUD({ name }));
+    return () => {
+      dispatch(addCRUD({ name }));
+    };
   }, [name]);
   return (
-    <Routes key={name}>
+    <Routes>
       <Route index path={name} element={<CrudPanel resource={name} />} />
       <Route
         path={`${name}/:id`}

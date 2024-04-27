@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App.tsx";
 import { Provider } from "react-redux";
-import { store } from "./app/";
-import { PageLoader } from "./components/index.ts";
+import { PageLoader } from "@components/layout";
+import { store } from "./app/store/store";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

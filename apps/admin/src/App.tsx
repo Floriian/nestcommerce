@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
-import { Resource } from "./features/crud/components";
-import { Layout } from "./components";
+import { Resource } from "@features/crud";
+import { Layout } from "@components/layout";
 export function App() {
   return (
     <BrowserRouter>

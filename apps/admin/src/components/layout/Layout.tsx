@@ -11,9 +11,10 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { useResources } from "../../features/crud";
-import { Link, useNavigate } from "react-router-dom";
-import { CrudResource } from "../../features/crud/types";
+import { useNavigate } from "react-router-dom";
+import { FolderOpenOutlined } from "@mui/icons-material";
+import { useResources } from "@features/crud";
+import { CrudResource } from "@features/crud/types";
 
 const drawerWidth = 240;
 
@@ -56,6 +57,9 @@ export function Layout({ children }: Props) {
               onClick={() => handleClick(resource)}
             >
               <ListItemButton>
+                <ListItemIcon>
+                  <FolderOpenOutlined />
+                </ListItemIcon>
                 <ListItemText primary={resource.name} />
               </ListItemButton>
             </ListItem>

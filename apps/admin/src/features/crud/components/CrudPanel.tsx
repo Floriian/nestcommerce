@@ -1,6 +1,6 @@
+import { BaseEntity } from "../../../types";
+import { axiosInstance } from "@utils/axios";
 import { useEffect, useState } from "react";
-import { axiosInstance } from "../../../utils";
-import { BaseEntity } from "../../../types/BaseEntity";
 
 interface Props {
   resource: string;
