@@ -9,6 +9,7 @@ import { cacheConfig, mongooseConfig } from './config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     CacheModule.registerAsync(cacheConfig),
@@ -21,6 +22,7 @@ import { CartModule } from './cart/cart.module';
     CategoryModule,
     ProductModule,
     CartModule,
+    AuthModule,
   ],
 })
 export class AppModule implements NestModule {
