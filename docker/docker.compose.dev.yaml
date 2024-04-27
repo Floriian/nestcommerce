@@ -13,6 +13,7 @@ services:
       - 27017:27017
     volumes:
       - ./dev-scripts:/docker-entrypoint-initdb.d/
+      - ./mongo:/data/db
 
   redis:
     container_name: dev-redis

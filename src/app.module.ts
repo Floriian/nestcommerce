@@ -7,6 +7,7 @@ import { CategoryModule } from './category/category.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { cacheConfig, mongooseConfig } from './config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ProductModule } from './product/product.module';
 @Module({
   imports: [
     CacheModule.registerAsync(cacheConfig),
@@ -17,6 +18,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     EnvModule,
     CategoryModule,
+    ProductModule,
   ],
 })
 export class AppModule implements NestModule {

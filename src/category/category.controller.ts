@@ -11,6 +11,8 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { FindOneCategoryDto } from './dto/findone-category.dto';
+import { ParseMongoIdPipe } from 'src/common/pipes/ParseMongoId.pipe';
+import { ObjectId } from 'mongoose';
 
 @Controller('category')
 export class CategoryController {
@@ -27,8 +29,13 @@ export class CategoryController {
   }
 
   @Get(':id')
-  findOne(@Param() params: FindOneCategoryDto) {
-    return this.categoryService.findOne(params);
+  findOne(@Param('id', ParseMongoIdPipe) id: ObjectId) {
+    return this.categoryService.findOne(id);
+  }
+
+  @Get('/url/:url')
+  findByUrl(@Param('url') url: string) {
+    return this.categoryService.findByUrl(url);
   }
 
   @Patch(':id')
@@ -36,11 +43,11 @@ export class CategoryController {
     @Param('id') id: string,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoryService.update(+id, updateCategoryDto);
+    return this.categoryService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.categoryService.remove(+id);
+    return this.categoryService.remove(id);
   }
 }
