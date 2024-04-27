@@ -6,7 +6,8 @@
     "dc:up:dev": "docker compose -f docker/docker.compose.dev.yaml up -d",
     "dev": "npm run dc:up:dev && turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "pnpm --filter @repo/ui ui:add"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
