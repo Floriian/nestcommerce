@@ -34,8 +34,8 @@ export class ProductService {
     }
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    return await this.productModel.find();
   }
 
   findOne(id: number) {

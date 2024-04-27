@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import { CrudPanel } from "./CrudPanel";
-import { CrudResource } from "../types";
 import { useAppDispatch } from "@app/store";
 import { addCRUD } from "../crud.slice";
+import { CrudResource } from "../types";
 
 export function Resource({
   name,

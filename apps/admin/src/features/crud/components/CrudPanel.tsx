@@ -10,12 +10,16 @@ import {
 import { BaseEntity } from "../../../types";
 import { axiosInstance } from "@utils/axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   resource: string;
 }
 export function CrudPanel({ resource }: Props) {
   const [data, setData] = useState<BaseEntity[]>();
+  const navigate = useNavigate();
+
+  const handleClick = (id: string) => navigate(`${resource}/${id}`);
   useEffect(() => {
     const getData = async () => {
       const response = await axiosInstance.get<BaseEntity[]>(resource);
@@ -23,6 +27,7 @@ export function CrudPanel({ resource }: Props) {
     };
     getData();
   }, []);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -36,8 +41,15 @@ export function CrudPanel({ resource }: Props) {
           <TableBody>
             {data?.map((row) => (
               <TableRow
+                onClick={() => handleClick(row._id)}
                 key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": {
+                    cursor: "pointer",
+                    backgroundColor: "rgba(0,0,0, 0.1)",
+                  },
+                }}
               >
                 <TableCell align="left">{row._id}</TableCell>
                 <TableCell align="right">{row.name}</TableCell>
