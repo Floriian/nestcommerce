@@ -10,7 +10,6 @@ import {
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { FindOneCategoryDto } from './dto/findone-category.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/ParseMongoId.pipe';
 import { ObjectId } from 'mongoose';
 
