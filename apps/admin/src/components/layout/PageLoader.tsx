@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import { Sync } from "@mui/icons-material";
+import { Box, CircularProgress } from "@mui/material";
 
 export function PageLoader() {
   return (
@@ -15,7 +14,7 @@ export function PageLoader() {
         backgroundColor: "rgba(0,0,0,0.8",
       }}
     >
-      <Sync />
+      <CircularProgress />
     </Box>
   );
 }
