@@ -1,4 +1,4 @@
-import { api } from "@app/api";
+import { api } from "~app";
 import type { Category } from "./types";
 
 export const categoryApi = api.injectEndpoints({

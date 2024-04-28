@@ -1,5 +1,5 @@
-import { RootState } from "@app/store";
 import { createSelector } from "@reduxjs/toolkit";
+import { RootState } from "~app/store";
 
 function rootSelector(state: RootState) {
   return state.crud;

@@ -1,4 +1,3 @@
-import { useIDParam } from "@hooks/useIDParam";
 import { useGetCategoryQuery } from "../category.api";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +10,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useEffect } from "react";
+import { useIDParam } from "~hooks";
 
 export function EditCategory() {
   const { id } = useIDParam();

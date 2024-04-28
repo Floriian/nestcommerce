@@ -13,8 +13,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FolderOpenOutlined } from "@mui/icons-material";
-import { useResources } from "@features/crud";
-import { CrudResource } from "@features/crud/types";
+import { CrudResource, useResources } from "~features/crud";
 
 const drawerWidth = 240;
 

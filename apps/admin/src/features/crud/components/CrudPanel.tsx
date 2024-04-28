@@ -7,10 +7,10 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { BaseEntity } from "../../../types";
-import { axiosInstance } from "@utils/axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BaseEntity } from "~types/BaseEntity";
+import { axiosInstance } from "~utils";
 
 interface Props {
   resource: string;
