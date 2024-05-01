@@ -20,7 +20,7 @@ export function EditCategory() {
 
   const { handleSubmit, control, reset } = useForm<Category>({
     resolver: zodResolver(categorySchema),
-    defaultValues: data ? data : { name: "", active: "true " },
+    defaultValues: data ? data : { name: "", active: true },
   });
 
   const onSubmit: SubmitHandler<Category> = (data) => {

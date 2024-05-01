@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FolderOpenOutlined } from "@mui/icons-material";
-import { CrudResource, useResources } from "~features/crud";
 
 const drawerWidth = 240;
 
@@ -22,10 +21,10 @@ interface Props {
 }
 
 export function Layout({ children }: Props) {
-  const { resources } = useResources();
+  // const { resources } = useResources();
 
-  const navigate = useNavigate();
-  const handleClick = (resource: CrudResource) => navigate(`/${resource.name}`);
+  // const navigate = useNavigate();
+  // const handleClick = (resource: CrudResource) => navigate(`/${resource.name}`);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -49,7 +48,7 @@ export function Layout({ children }: Props) {
         <Toolbar />
         <Divider />
         <List>
-          {resources.map((resource) => (
+          {/* {resources.map((resource) => (
             <ListItem
               disablePadding
               key={resource.name}
@@ -62,7 +61,7 @@ export function Layout({ children }: Props) {
                 <ListItemText primary={resource.name} />
               </ListItemButton>
             </ListItem>
-          ))}
+          ))} */}
         </List>
       </Drawer>
       <Box
