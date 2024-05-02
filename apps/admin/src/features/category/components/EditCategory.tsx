@@ -10,12 +10,12 @@ import {
   TextField,
 } from "@mui/material";
 import { useEffect } from "react";
-import { useIDParam } from "~hooks";
+import { categoryIdRoute } from "../category.routes";
 
 export function EditCategory() {
-  const { id } = useIDParam();
+  const { categoryId } = categoryIdRoute.useParams();
   const { data, isSuccess } = useGetCategoryQuery({
-    id: id!,
+    id: categoryId!,
   });
 
   const { handleSubmit, control, reset } = useForm<Category>({

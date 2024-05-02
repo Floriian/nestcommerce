@@ -11,20 +11,13 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { FolderOpenOutlined } from "@mui/icons-material";
+import { Outlet, useNavigate } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 const drawerWidth = 240;
-
-interface Props {
-  children: React.ReactNode;
-}
-
-export function Layout({ children }: Props) {
-  // const { resources } = useResources();
-
-  // const navigate = useNavigate();
-  // const handleClick = (resource: CrudResource) => navigate(`/${resource.name}`);
+export function Layout() {
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -48,20 +41,20 @@ export function Layout({ children }: Props) {
         <Toolbar />
         <Divider />
         <List>
-          {/* {resources.map((resource) => (
+          {["category", "products"].map((resource) => (
             <ListItem
               disablePadding
-              key={resource.name}
-              onClick={() => handleClick(resource)}
+              key={resource}
+              onClick={() => navigate({ to: "/" + resource })}
             >
               <ListItemButton>
                 <ListItemIcon>
                   <FolderOpenOutlined />
                 </ListItemIcon>
-                <ListItemText primary={resource.name} />
+                <ListItemText primary={resource} />
               </ListItemButton>
             </ListItem>
-          ))} */}
+          ))}
         </List>
       </Drawer>
       <Box
@@ -69,7 +62,8 @@ export function Layout({ children }: Props) {
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
         <Toolbar />
-        {children}
+        <Outlet />
+        <TanStackRouterDevtools />
       </Box>
     </Box>
   );

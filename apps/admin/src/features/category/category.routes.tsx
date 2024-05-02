@@ -1,13 +1,20 @@
-import { Route } from "~types/Route";
-import { EditCategory } from "./components";
+import { rootRoute } from "../../router";
+import { CategoryTable, EditCategory } from "./components";
+import { createRoute } from "@tanstack/react-router";
 
-export const categoryRoutes: Route = {
+export const categoryRoute = createRoute({
+  getParentRoute: () => rootRoute,
   path: "category",
-  // element: <CrudPanel resource="category" />,
-  children: [
-    {
-      path: ":id",
-      element: <EditCategory />,
-    },
-  ],
-};
+});
+
+export const categoryIndexRoute = createRoute({
+  getParentRoute: () => categoryRoute,
+  path: "/",
+  component: CategoryTable,
+});
+
+export const categoryIdRoute = createRoute({
+  getParentRoute: () => categoryRoute,
+  path: "$categoryId",
+  component: EditCategory,
+});
