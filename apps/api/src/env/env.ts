@@ -1,10 +1,4 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsNumberString,
-  IsString,
-  validateSync,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
 export class Env {
@@ -19,6 +13,14 @@ export class Env {
   @IsNotEmpty()
   @IsNumber()
   REDIS_PORT: number;
+
+  @IsNotEmpty()
+  @IsString()
+  AT_SECRET: string;
+
+  @IsNotEmpty()
+  @IsString()
+  RT_SECRET: string;
 }
 
 export const validateEnv = (env: Record<string, unknown>) => {

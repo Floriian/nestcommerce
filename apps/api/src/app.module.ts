@@ -10,6 +10,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { AuthModule } from './auth/auth.module';
+import { SessionModule } from './session/session.module';
+import { UserModule } from './user/user.module';
+import { RedisModule } from './redis/redis.module';
 @Module({
   imports: [
     CacheModule.registerAsync(cacheConfig),
@@ -23,6 +26,9 @@ import { AuthModule } from './auth/auth.module';
     ProductModule,
     CartModule,
     AuthModule,
+    SessionModule,
+    UserModule,
+    RedisModule,
   ],
 })
 export class AppModule implements NestModule {

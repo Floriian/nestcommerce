@@ -1,21 +1,23 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
-import { Cache } from 'cache-manager';
 import { NextFunction, Request, Response } from 'express';
+import { randomUUID } from 'node:crypto';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
+  constructor(
+    @Inject(RedisService) private readonly redisService: RedisService,
+  ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const host = req.headers['x-forwarded-for'] || req.ip;
+    const sessionId = req.cookies.nest_commerce;
+    const result = sessionId && (await this.redisService.hGetAll(sessionId));
 
-    const result = await this.cacheManager.get(`${host}`);
-    if (!result)
-      await this.cacheManager.set(
-        host as string,
-        JSON.stringify({ hello: 'world ' }),
-      );
+    if (!result) {
+      const newSessionId = randomUUID();
+      await this.redisService.hSet(newSessionId);
+      res.cookie('nest_commerce', newSessionId);
+    }
 
     next();
   }

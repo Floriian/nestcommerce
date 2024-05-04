@@ -27,6 +27,11 @@ export class CategoryController {
     return this.categoryService.findAll();
   }
 
+  @Get('/admin')
+  findAllForAdmin() {
+    return this.categoryService.findForAdmin();
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseMongoIdPipe) id: ObjectId) {
     return this.categoryService.findOne(id);
