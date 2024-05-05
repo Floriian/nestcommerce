@@ -9,9 +9,8 @@ async function bootstrap() {
     cors: { origin: ['http://localhost:5173'] },
   });
 
-  app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
   app.use(cookieParser());
-
+  app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
   await app.listen(3000);
 }
 bootstrap();

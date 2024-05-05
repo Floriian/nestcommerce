@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { Token } from 'src/auth/token';
 import { EnvService } from 'src/env/env.service';
 import { RedisService } from 'src/redis/redis.service';
+import { SessionExpiredException } from './exceptions/session-expired.exception';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
@@ -34,8 +35,10 @@ export class SessionMiddleware implements NestMiddleware {
       const tokens = await this.redisService.hGetAll(`${sessionId}`);
 
       if (tokens.access_token && tokens.refresh_token) {
-        console.log(req.context);
         req.context.tokens = tokens as unknown as Token;
+      } else {
+        res.clearCookie(cookieName);
+        throw new SessionExpiredException();
       }
     }
 
