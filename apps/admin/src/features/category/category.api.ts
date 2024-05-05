@@ -8,7 +8,7 @@ export const categoryApi = api.injectEndpoints({
       providesTags: ["category"],
     }),
     getCategories: builder.query<Category[], void>({
-      query: () => ({ method: "GET", url: "category" }),
+      query: () => ({ method: "GET", url: "category/admin" }),
       providesTags: ["category"],
     }),
   }),

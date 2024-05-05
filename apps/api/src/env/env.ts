@@ -21,6 +21,10 @@ export class Env {
   @IsNotEmpty()
   @IsString()
   RT_SECRET: string;
+
+  @IsNotEmpty()
+  @IsString()
+  COOKIE_NAME: string;
 }
 
 export const validateEnv = (env: Record<string, unknown>) => {

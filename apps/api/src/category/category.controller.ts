@@ -12,6 +12,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/ParseMongoId.pipe';
 import { ObjectId } from 'mongoose';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('category')
 export class CategoryController {
@@ -22,6 +23,7 @@ export class CategoryController {
     return this.categoryService.create(createCategoryDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.categoryService.findAll();

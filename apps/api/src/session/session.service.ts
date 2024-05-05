@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+
 import { Token } from 'src/auth/token';
 import { RedisService } from 'src/redis/redis.service';
 
@@ -8,7 +9,6 @@ export class SessionService {
 
   async createSession(sessionId: string, tokens: Token): Promise<boolean> {
     try {
-      await this.redisService.hDel('', '');
       await this.redisService.hSet(
         sessionId,
         'access_token',

@@ -1,35 +1,35 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { JwtPayload } from '../jwt-payload';
-import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
+import { RedisService } from 'src/redis/redis.service';
+import { EnvService } from 'src/env/env.service';
 
 @Injectable()
 export class RefreshTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-refresh',
 ) {
-  constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {
+  constructor(
+    private readonly redisService: RedisService,
+    private readonly envService: EnvService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        async (req: Request) => {
-          const { nest_commerce } = req.cookies;
-
-          const { refresh_token } = await this.cache.get<{
-            refresh_token: string;
-          }>(`${nest_commerce}`);
-
-          return refresh_token;
+        (req: Request) => {
+          return req.context?.tokens?.refresh_token;
         },
       ]),
-      secretOrKey: process.env.RT_SECRET,
+      secretOrKey: envService.get('RT_SECRET'),
       passReqToCallback: true,
     });
   }
 
-  validate(req: Request, payload: JwtPayload) {
-    const refreshToken = req.cookies.refresh_token;
-    return { ...payload, refreshToken };
+  async validate(req: Request, payload: JwtPayload) {
+    const cookieName = this.envService.get('COOKIE_NAME') as string;
+    const cookie = req.cookies[cookieName];
+    const { refresh_token } = await this.redisService.hGetAll(cookie);
+    return { ...payload, refresh_token };
   }
 }

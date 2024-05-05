@@ -10,14 +10,8 @@ export class AccessTokenStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        async (req: Request) => {
-          const { nest_commerce } = req.cookies;
-
-          const { access_token } = await this.cache.get<{
-            access_token: string;
-          }>(`${nest_commerce}`);
-
-          return access_token;
+        (req: Request) => {
+          return req.context?.tokens?.access_token;
         },
       ]),
       secretOrKey: process.env.AT_SECRET,

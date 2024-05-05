@@ -13,6 +13,8 @@ import { AuthModule } from './auth/auth.module';
 import { SessionModule } from './session/session.module';
 import { UserModule } from './user/user.module';
 import { RedisModule } from './redis/redis.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AtGuard } from './auth/guards/access-token.guard';
 @Module({
   imports: [
     CacheModule.registerAsync(cacheConfig),
@@ -30,6 +32,7 @@ import { RedisModule } from './redis/redis.module';
     UserModule,
     RedisModule,
   ],
+  providers: [{ provide: APP_GUARD, useClass: AtGuard }],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -10,11 +10,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/user/entities/User.entity';
 import { EnvModule } from 'src/env/env.module';
 import { SessionModule } from 'src/session/session.module';
+import { RedisModule } from 'src/redis/redis.module';
 
 @Module({
   imports: [
     EnvModule,
     SessionModule,
+    RedisModule,
     JwtModule.register({}),
     CacheModule.registerAsync(cacheConfig),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
