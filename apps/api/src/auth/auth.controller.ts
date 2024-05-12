@@ -11,14 +11,13 @@ export class AuthController {
 
   @Public()
   @Post('sign-in')
-  signUp(@Body() dto: SignUpDto, @GetSession() sessionId: string) {
-    console.log(sessionId);
+  signUp(@Body() dto: SignInDto, @GetSession() sessionId: string) {
     return this.authService.signIn(dto, sessionId);
   }
 
   @Public()
   @Post('sign-up')
-  signIn(@Body() dto: SignInDto, @GetSession() sessionId: string) {
+  signIn(@Body() dto: SignUpDto, @GetSession() sessionId: string) {
     return this.authService.signUp(dto, sessionId);
   }
 }

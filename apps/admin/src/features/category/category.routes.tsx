@@ -1,9 +1,9 @@
-import { rootRoute } from "../../router";
+import { authenticatedRoutes } from "../../router";
 import { CategoryTable, EditCategory } from "./components";
 import { createRoute } from "@tanstack/react-router";
 
 export const categoryRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => authenticatedRoutes,
   path: "category",
 });
 

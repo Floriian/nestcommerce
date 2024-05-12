@@ -4,13 +4,25 @@ import {
   categoryRoute,
 } from "~features/category";
 import { Layout } from "./components";
-import { createRootRoute, createRouter } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from "@tanstack/react-router";
+import { authIndexRoute, authRoutes } from "~features/auth";
 
-export const rootRoute = createRootRoute({
+export const rootRoute = createRootRoute();
+
+export const authenticatedRoutes = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/",
   component: Layout,
 });
 
 export const routeTree = rootRoute.addChildren([
-  categoryRoute.addChildren([categoryIndexRoute, categoryIdRoute]),
+  authRoutes.addChildren([authIndexRoute]),
+  authenticatedRoutes.addChildren([
+    categoryRoute.addChildren([categoryIndexRoute, categoryIdRoute]),
+  ]),
 ]);
 export const router = createRouter({ routeTree });
