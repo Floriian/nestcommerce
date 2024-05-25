@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import React from "react";
+import React, { forwardRef } from "react";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -13,9 +13,9 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export const FileInput = (
-  props: React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  >
-) => <VisuallyHiddenInput type="file" accept="image/*" {...props} />;
+export const FileInput = forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>((props, ref) => (
+  <VisuallyHiddenInput type="file" accept="image/*" {...props} ref={ref} />
+));
