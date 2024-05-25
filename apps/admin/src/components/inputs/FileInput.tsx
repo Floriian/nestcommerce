@@ -17,5 +17,5 @@ export const FileInput = forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement>
 >((props, ref) => (
-  <VisuallyHiddenInput type="file" accept="image/*" {...props} ref={ref} />
+  <VisuallyHiddenInput type="file" accept="image/*" ref={ref} {...props} />
 ));
