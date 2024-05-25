@@ -10,7 +10,7 @@ axiosInstance.interceptors.response.use(
   (e) => {
     const err = e as unknown as AxiosError<ApiHttpError>;
     if (
-      err.response?.status === HttpStatusCode.Unauthorized &&
+      err.response?.status === HttpStatusCode.Unauthorized ||
       err?.response?.data?.message === "Session expired. Please login again"
     )
       window.location.href = "/auth";
