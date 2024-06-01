@@ -1,6 +1,7 @@
 import {
   categoryIdRoute,
   categoryIndexRoute,
+  categoryNewRoute,
   categoryRoute,
 } from "~features/category";
 import { Layout } from "./components";
@@ -22,7 +23,11 @@ export const authenticatedRoutes = createRoute({
 export const routeTree = rootRoute.addChildren([
   authRoutes.addChildren([authIndexRoute]),
   authenticatedRoutes.addChildren([
-    categoryRoute.addChildren([categoryIndexRoute, categoryIdRoute]),
+    categoryRoute.addChildren([
+      categoryIndexRoute,
+      categoryNewRoute,
+      categoryIdRoute,
+    ]),
   ]),
 ]);
 export const router = createRouter({ routeTree });

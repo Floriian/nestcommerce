@@ -9,9 +9,14 @@ import {
   FormGroup,
   Switch,
   TextField,
+  Typography,
 } from "@mui/material";
 import { CloudUpload } from "@mui/icons-material";
 import { FileInput } from "~components";
+import {
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+} from "../category.api";
 
 interface Props {
   formData: Category | undefined;
@@ -23,8 +28,20 @@ export function CategoryForm({ formData }: Props) {
     defaultValues: formData ? formData : { name: "", active: true },
   });
 
-  const onSubmit: SubmitHandler<Category> = (data) => {
-    console.log(data);
+  const [updateCategory, { isLoading: updateCategoryIsLoading }] =
+    useUpdateCategoryMutation();
+  const [createCategory, { isLoading: createCategoryIsLoading }] =
+    useCreateCategoryMutation();
+
+  const buttonDisabled = createCategoryIsLoading || updateCategoryIsLoading;
+
+  const onSubmit: SubmitHandler<Category> = async (data) => {
+    console.log("submitting");
+    if (data._id) {
+      await updateCategory(data);
+    } else {
+      await createCategory(data);
+    }
   };
 
   useEffect(() => reset(formData), [formData, reset]);
@@ -33,19 +50,41 @@ export function CategoryForm({ formData }: Props) {
     <Box
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ gap: "1rem", display: "flex", flexDirection: "column" }}
+      sx={{
+        gap: "1rem",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
+      <Typography variant="h6">
+        {formData?._id
+          ? `Editing ${formData?.name} category`
+          : "Create a new category"}
+      </Typography>
       <Controller
         name="active"
         control={control}
         render={({ field }) => (
           <FormGroup>
-            <FormControlLabel control={<Switch {...field} />} label="Active" />
+            <FormControlLabel
+              control={<Switch {...field} checked={field.value} />}
+              label="Active"
+            />
           </FormGroup>
         )}
       />
       <Controller
         name="name"
+        control={control}
+        render={({ field, fieldState: { error } }) => (
+          <FormGroup>
+            <TextField {...field} helperText={error?.message} />
+          </FormGroup>
+        )}
+      />
+
+      <Controller
+        name="url"
         control={control}
         render={({ field, fieldState: { error } }) => (
           <FormGroup>
@@ -65,7 +104,7 @@ export function CategoryForm({ formData }: Props) {
         <FileInput {...register("image")} type="file" accept="image/*" />
       </Button>
 
-      <Button type="submit" variant="contained">
+      <Button type="submit" variant="contained" disabled={buttonDisabled}>
         Save
       </Button>
     </Box>

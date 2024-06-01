@@ -15,6 +15,7 @@ import { UserModule } from './user/user.module';
 import { RedisModule } from './redis/redis.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './auth/guards/access-token.guard';
+
 @Module({
   imports: [
     CacheModule.registerAsync(cacheConfig),

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -13,6 +14,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/ParseMongoId.pipe';
 import { ObjectId } from 'mongoose';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { CategoryFindAllQueryDto } from './dto/CategoryFindAllQueryDto';
 
 @Controller('category')
 export class CategoryController {
@@ -25,13 +27,13 @@ export class CategoryController {
 
   @Public()
   @Get()
-  findAll() {
-    return this.categoryService.findAll();
+  findAll(@Query() { page, limit }: CategoryFindAllQueryDto) {
+    return this.categoryService.findAll(page, +limit);
   }
 
   @Get('/admin')
-  findAllForAdmin() {
-    return this.categoryService.findForAdmin();
+  findAllForAdmin(@Query() { page, limit }: CategoryFindAllQueryDto) {
+    return this.categoryService.findForAdmin(+page, +limit);
   }
 
   @Get(':id')

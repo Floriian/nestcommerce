@@ -1,6 +1,8 @@
 import { authenticatedRoutes } from "../../router";
-import { CategoryTable, EditCategory } from "./components";
+import { EditCategory } from "./components";
 import { createRoute } from "@tanstack/react-router";
+import { CategoryPage } from "./components/CategoryPage";
+import { NewCategory } from "./components/NewCategory";
 
 export const categoryRoute = createRoute({
   getParentRoute: () => authenticatedRoutes,
@@ -10,11 +12,17 @@ export const categoryRoute = createRoute({
 export const categoryIndexRoute = createRoute({
   getParentRoute: () => categoryRoute,
   path: "/",
-  component: CategoryTable,
+  component: CategoryPage,
 });
 
 export const categoryIdRoute = createRoute({
   getParentRoute: () => categoryRoute,
   path: "$categoryId",
   component: EditCategory,
+});
+
+export const categoryNewRoute = createRoute({
+  getParentRoute: () => categoryRoute,
+  path: "new",
+  component: NewCategory,
 });

@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsImage } from 'src/common/validation/IsImage';
 
 export class CreateCategoryDto {
   @IsNotEmpty()
@@ -8,4 +9,7 @@ export class CreateCategoryDto {
   @IsNotEmpty()
   @IsString()
   url: string;
+
+  @IsOptional()
+  image: File;
 }
