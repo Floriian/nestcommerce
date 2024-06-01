@@ -9,12 +9,14 @@ import { CategoryTable } from "./CategoryTable";
 import { CategoryFilter } from "./CategoryFilter";
 import { useGetCategoriesQuery } from "../category.api";
 import { useState } from "react";
+import { useAppSelector } from "~app/store";
 
 export function CategoryPage() {
   const [page, setPage] = useState<number | undefined>(0);
+  const limit = useAppSelector((state) => state.filter.limit);
   const { data, isLoading, refetch } = useGetCategoriesQuery({
     page,
-    limit: 15, //TODO: in slice
+    limit,
   });
 
   const handlePaginationClick = (page: number) => {
