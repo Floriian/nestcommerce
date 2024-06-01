@@ -10,8 +10,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { Category } from "../category.schema";
 import { NoUndefinedField } from "~types/NoUndefinedField";
+import { Category } from "../types";
 
 interface Props {
   data: Category[];
@@ -28,6 +28,7 @@ export function CategoryTable({ data }: Props) {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>Products</TableCell>
             <TableCell align="right">Active</TableCell>
           </TableRow>
         </TableHead>
@@ -54,6 +55,9 @@ export function CategoryTable({ data }: Props) {
                 <TableCell>{row._id}</TableCell>
                 <TableCell component="th" scope="row">
                   {row.name}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {row.products.length}
                 </TableCell>
                 <TableCell align="right">
                   <Switch disabled checked={row.active} />
