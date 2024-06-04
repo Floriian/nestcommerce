@@ -8,4 +8,4 @@ export const categorySchema = z.object({
   url: z.string(),
 });
 
-export type Category = z.infer<typeof categorySchema>;
+export type CategorySchema = z.infer<typeof categorySchema>;

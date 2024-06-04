@@ -39,17 +39,25 @@ export class CategoryService {
   }
 
   async findForAdmin(
-    page: number,
-    limit: number,
+    dto: CategoryFindAllQueryDto,
   ): Promise<PaginationResponse<Category[]>> {
+    const regexp = new RegExp(dto.text, 'i');
+
     const categories = await this.categoryModel
-      .find()
+      .find(
+        dto
+          ? {
+              ...(dto.text && { name: { $regex: regexp } }),
+              ...(dto.active !== 'ALL' ? { active: !!dto.active } : {}),
+            }
+          : {},
+      )
       .sort({ _id: 1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
+      .skip((+dto.page - 1) * +dto.limit)
+      .limit(+dto.limit);
 
     const count = await this.categoryModel.countDocuments();
-    const defaultLimit = limit ? limit : 15;
+    const defaultLimit = +dto.limit ? +dto.limit : 15;
     const totalPages = Math.ceil(count / defaultLimit);
 
     return {

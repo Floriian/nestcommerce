@@ -10,11 +10,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useNavigate } from "@tanstack/react-router";
-import { NoUndefinedField } from "~types/NoUndefinedField";
-import { Category } from "../types";
+import type { NoUndefinedField } from "~types";
+import type { Category } from "../types";
 
 interface Props {
-  data: Category[];
+  data: Category[] | undefined;
 }
 
 export function CategoryTable({ data }: Props) {

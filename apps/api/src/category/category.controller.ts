@@ -32,8 +32,8 @@ export class CategoryController {
   }
 
   @Get('/admin')
-  findAllForAdmin(@Query() { page, limit }: CategoryFindAllQueryDto) {
-    return this.categoryService.findForAdmin(+page, +limit);
+  findAllForAdmin(@Query() dto: CategoryFindAllQueryDto) {
+    return this.categoryService.findForAdmin(dto);
   }
 
   @Get(':id')

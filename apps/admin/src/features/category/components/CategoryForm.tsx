@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Category, categorySchema } from "../category.schema";
+import { CategorySchema, categorySchema } from "../category.schema";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import {
@@ -17,13 +17,14 @@ import {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
 } from "../category.api";
+import { Category } from "../types";
 
 interface Props {
   formData: Category | undefined;
 }
 
 export function CategoryForm({ formData }: Props) {
-  const { handleSubmit, control, reset, register } = useForm<Category>({
+  const { handleSubmit, control, reset, register } = useForm<CategorySchema>({
     resolver: zodResolver(categorySchema),
     defaultValues: formData ? formData : { name: "", active: true },
   });
@@ -35,12 +36,12 @@ export function CategoryForm({ formData }: Props) {
 
   const buttonDisabled = createCategoryIsLoading || updateCategoryIsLoading;
 
-  const onSubmit: SubmitHandler<Category> = async (data) => {
+  const onSubmit: SubmitHandler<CategorySchema> = async (data) => {
     console.log("submitting");
     if (data._id) {
-      await updateCategory(data);
+      await updateCategory(data as unknown as Category);
     } else {
-      await createCategory(data);
+      await createCategory(data as unknown as Category);
     }
   };
 

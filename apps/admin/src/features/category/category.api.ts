@@ -1,7 +1,8 @@
 import { api } from "~app";
 import { SuccessResponse } from "~types/SuccessResponse";
 import { PaginationResponse } from "~types/PaginationResponse";
-import { Category } from "./category.schema";
+import { createUrlQuery } from "~utils/createUrlQuery";
+import { ActiveOptions, Category } from "./types";
 
 export const categoryApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,11 +12,16 @@ export const categoryApi = api.injectEndpoints({
     }),
     getCategories: builder.query<
       PaginationResponse<Category[]>,
-      Partial<{ page?: number; limit?: number }>
+      {
+        page?: number;
+        limit?: number;
+        text?: string;
+        active?: ActiveOptions | undefined;
+      }
     >({
       query: (data) => ({
         method: "GET",
-        url: `/category/admin?page=${data.page ? data.page : 1}&limit=${data.limit ? data.limit : 15}`,
+        url: `/category/admin${createUrlQuery(data)}`,
       }),
       providesTags: ["category"],
     }),
