@@ -14,7 +14,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/ParseMongoId.pipe';
 import { ObjectId } from 'mongoose';
 import { Public } from 'src/auth/decorators/public.decorator';
-import { CategoryFindAllQueryDto } from './dto/CategoryFindAllQueryDto';
+import { CategoryFindAllQueryDto } from './dto/category-find-all-query.dto';
 
 @Controller('category')
 export class CategoryController {

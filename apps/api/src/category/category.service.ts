@@ -7,7 +7,7 @@ import mongoose, { ObjectId } from 'mongoose';
 import { CategoryExistsException } from './exceptions/CategoryExists.exception';
 import { FindOneCategoryDto } from './dto/findone-category.dto';
 import { CategoryNotFoundException } from './exceptions/CategoryNotFound.exception';
-import { CategoryFindAllQueryDto } from './dto/CategoryFindAllQueryDto';
+import { CategoryFindAllQueryDto } from './dto/category-find-all-query.dto';
 import { PaginationResponse } from 'src/types';
 
 @Injectable()
