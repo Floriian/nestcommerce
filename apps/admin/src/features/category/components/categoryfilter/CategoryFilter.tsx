@@ -49,6 +49,7 @@ export function CategoryFilter() {
           <InputLabel>Active</InputLabel>
           <Select
             value={categoryFilter.active}
+            label="Active"
             onChange={(e) =>
               handleActiveChange(e.target.value as ActiveOptions)
             }
