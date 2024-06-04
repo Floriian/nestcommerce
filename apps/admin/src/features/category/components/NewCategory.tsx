@@ -1,5 +1,10 @@
+import { Paper } from "@mui/material";
 import { CategoryForm } from "./CategoryForm";
 
 export function NewCategory() {
-  return <CategoryForm formData={undefined} />;
+  return (
+    <Paper sx={{ padding: "1rem" }}>
+      <CategoryForm formData={undefined} />
+    </Paper>
+  );
 }
