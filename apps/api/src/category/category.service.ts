@@ -56,7 +56,7 @@ export class CategoryService {
       .skip((+dto.page - 1) * +dto.limit)
       .limit(+dto.limit);
 
-    const count = await this.categoryModel.countDocuments();
+    const count = categories?.length;
     const defaultLimit = +dto.limit ? +dto.limit : 15;
     const totalPages = Math.ceil(count / defaultLimit);
 
