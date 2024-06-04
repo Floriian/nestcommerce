@@ -43,20 +43,20 @@ export class CategoryService {
   ): Promise<PaginationResponse<Category[]>> {
     const regexp = new RegExp(dto.text, 'i');
 
+    const filterOptions: mongoose.FilterQuery<Category> = dto
+      ? {
+          ...(dto.text && { name: { $regex: regexp } }),
+          ...(dto.active !== 'ALL' ? { active: !!dto.active } : {}),
+        }
+      : {};
+
     const categories = await this.categoryModel
-      .find(
-        dto
-          ? {
-              ...(dto.text && { name: { $regex: regexp } }),
-              ...(dto.active !== 'ALL' ? { active: !!dto.active } : {}),
-            }
-          : {},
-      )
+      .find(filterOptions)
       .sort({ _id: 1 })
       .skip((+dto.page - 1) * +dto.limit)
       .limit(+dto.limit);
 
-    const count = categories?.length;
+    const count = await this.categoryModel.countDocuments(filterOptions);
     const defaultLimit = +dto.limit ? +dto.limit : 15;
     const totalPages = Math.ceil(count / defaultLimit);
 
