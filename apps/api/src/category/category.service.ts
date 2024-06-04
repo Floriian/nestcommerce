@@ -46,7 +46,7 @@ export class CategoryService {
     const filterOptions: mongoose.FilterQuery<Category> = dto
       ? {
           ...(dto.text && { name: { $regex: regexp } }),
-          ...(dto.active !== 'ALL' ? { active: !!dto.active } : {}),
+          ...(dto.active !== 'ALL' ? { active: dto.active } : {}),
         }
       : {};
 
