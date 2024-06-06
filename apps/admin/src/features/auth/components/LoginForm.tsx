@@ -10,11 +10,12 @@ import { useNavigate } from "@tanstack/react-router";
 export function LoginForm() {
   const { control, handleSubmit, reset } = useForm<AuthSchema>({
     resolver: zodResolver(authSchema),
+    defaultValues: { email: "", password: "" },
   });
   const [login, { data: response, isError, error }] = useLoginMutation();
   const navigate = useNavigate();
 
-  useEffect(() => reset(), [reset]);
+  useEffect(() => reset(), [reset, response]);
 
   const onSubmit: SubmitHandler<AuthSchema> = async (data) => {
     await login(data);
