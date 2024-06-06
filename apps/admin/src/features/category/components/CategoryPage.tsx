@@ -38,7 +38,8 @@ export function CategoryPage() {
     };
   }, [categoryFilter.active, categoryFilter.searchText, refetch]);
 
-  useEffect(() => console.log(categoryFilter), [categoryFilter]);
+  useEffect(() => setPage(data?.page), [data?.page]);
+  useEffect(() => console.log(page), [page]);
 
   return (
     <Paper
@@ -66,6 +67,7 @@ export function CategoryPage() {
         <Pagination
           count={data?.pages}
           onChange={(_, page) => handlePaginationClick(page)}
+          page={page}
         />
       </Box>
     </Paper>

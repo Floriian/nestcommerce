@@ -22,39 +22,6 @@ export function CategoryTable({ data }: Props) {
   const navigate = useNavigate();
   const theme = useTheme();
 
-  const tableRows =
-    data &&
-    (data as NoUndefinedField<Category[]>)?.map((row) => (
-      <TableRow
-        key={row.name}
-        sx={{
-          "&:last-child td, &:last-child th": { border: 0 },
-          "&:hover": {
-            cursor: "pointer",
-            backgroundColor: theme.palette.grey[300],
-            transition: "background-color .25s ease",
-          },
-        }}
-        onClick={() =>
-          navigate({
-            to: "/category/$categoryId",
-            params: { categoryId: row!._id },
-          })
-        }
-      >
-        <TableCell>{row._id}</TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {row.products.length}
-        </TableCell>
-        <TableCell align="right">
-          <Switch disabled checked={row.active} />
-        </TableCell>
-      </TableRow>
-    ));
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
