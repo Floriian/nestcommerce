@@ -4,8 +4,10 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductModel } from './entities/product.entity';
 import { CategoryService } from 'src/category/category.service';
-import mongoose from 'mongoose';
+import mongoose, { FilterQuery, ObjectId } from 'mongoose';
 import { ProductExistsException } from './exceptions/ProductExists.exception';
+import { PaginationResponse } from 'src/types';
+import { ProductFindAllQueryDto } from './dto/product-find-all-query.dto';
 
 @Injectable()
 export class ProductService {
@@ -35,7 +37,42 @@ export class ProductService {
   }
 
   async findAll() {
-    return await this.productModel.find();
+    return await this.productModel.find({ active: true });
+  }
+
+  async findAllForAdmin(
+    dto: ProductFindAllQueryDto,
+  ): Promise<PaginationResponse<Product[]>> {
+    const regexp = new RegExp(dto.text, 'i');
+
+    const filterOptions: FilterQuery<Product> = dto
+      ? {
+          ...(dto.text && { name: { $regex: regexp } }),
+          ...(dto.active !== 'ALL' ? { active: dto.active } : {}),
+        }
+      : {};
+
+    const count = await this.productModel.countDocuments(filterOptions);
+    const defaultLimit = +dto.limit ? +dto.limit : 15;
+    const totalPages = Math.ceil(count / defaultLimit);
+
+    if (totalPages < +dto.page) dto.page = '1';
+
+    const products = await this.productModel
+      .find(filterOptions)
+      .sort({ _id: 1 })
+      .skip((+dto.page - 1) * +dto.limit)
+      .limit(+dto.limit);
+
+    return {
+      data: products,
+      page: +dto.page,
+      pages: totalPages,
+    };
+  }
+
+  async findOneForAdmin(id: ObjectId) {
+    return await this.productModel.findById(id);
   }
 
   findOne(id: number) {

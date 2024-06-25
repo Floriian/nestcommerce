@@ -10,6 +10,9 @@ export class Product extends BaseEntity {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
   category: Category;
+
+  @Prop({ required: true, default: false })
+  active: boolean;
 }
 
 export type ProductDocument = HydratedDocument<Product>;
