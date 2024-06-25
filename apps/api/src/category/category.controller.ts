@@ -41,6 +41,7 @@ export class CategoryController {
     return this.categoryService.findOne(id);
   }
 
+  @Public()
   @Get('/url/:url')
   findByUrl(@Param('url') url: string) {
     return this.categoryService.findByUrl(url);
