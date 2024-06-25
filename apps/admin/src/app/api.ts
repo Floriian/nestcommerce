@@ -5,5 +5,5 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: axiosBaseQuery({ baseUrl: import.meta.env.VITE_PUBLIC_API_URL }),
   endpoints: () => ({}),
-  tagTypes: ["category"],
+  tagTypes: ["category", "product"],
 });

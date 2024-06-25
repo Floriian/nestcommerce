@@ -11,6 +11,7 @@ import {
   createRouter,
 } from "@tanstack/react-router";
 import { authIndexRoute, authRoutes } from "~features/auth";
+import { productIndexRoute, productRoute } from "~features/product";
 
 export const rootRoute = createRootRoute();
 
@@ -28,6 +29,7 @@ export const routeTree = rootRoute.addChildren([
       categoryNewRoute,
       categoryIdRoute,
     ]),
+    productRoute.addChildren([productIndexRoute]),
   ]),
 ]);
 export const router = createRouter({ routeTree });

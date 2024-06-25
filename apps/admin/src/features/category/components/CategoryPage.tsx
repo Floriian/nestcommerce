@@ -1,15 +1,9 @@
-import {
-  Box,
-  CircularProgress,
-  Pagination,
-  Paper,
-  Typography,
-} from "@mui/material";
 import { CategoryTable } from "./CategoryTable";
 import { useGetCategoriesQuery } from "../category.api";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "~app/store";
 import { CategoryFilter, useCategoryFilter } from "./categoryfilter";
+import { EntityPage } from "~components/layout";
 
 export function CategoryPage() {
   const [page, setPage] = useState<number | undefined>(0);
@@ -42,34 +36,15 @@ export function CategoryPage() {
   useEffect(() => console.log(page), [page]);
 
   return (
-    <Paper
-      elevation={5}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        padding: "0.5rem",
-        height: "auto",
-      }}
+    <EntityPage
+      filter={<CategoryFilter />}
+      currentPage={page}
+      onPaginationChange={handlePaginationClick}
+      isLoading={isLoading}
+      pages={data?.pages}
+      title="Category"
     >
-      <Typography variant="h5">Categories</Typography>
-      <CategoryFilter />
-      {isLoading ? <CircularProgress /> : <CategoryTable data={data!.data} />}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <Pagination
-          count={data?.pages}
-          onChange={(_, page) => handlePaginationClick(page)}
-          page={page}
-        />
-      </Box>
-    </Paper>
+      <CategoryTable data={data?.data} />
+    </EntityPage>
   );
 }
