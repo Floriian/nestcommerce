@@ -7,7 +7,11 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: ['http://localhost:5173', 'http://localhost:8080'],
+      origin: [
+        'http://localhost:5173',
+        'http://localhost:8080',
+        'http://localhost:5174',
+      ],
       credentials: true,
     },
   });

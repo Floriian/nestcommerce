@@ -17,6 +17,30 @@ interface Props {
   children: React.ReactNode;
 }
 
+/**
+ * A reusable component for entities. It is speed up the development for new entities. 
+ * @component
+ * @param filter Filter Component, instance of ReactNode
+ * @param isLoading Boolean indication if data is loading
+ * @param pages Number of pages available
+ * @param currentPage: Function to handle page change
+ * @param title Name of the entity
+ * @param children Content of page
+ * @example
+ * <EntityPage
+  currentPage={currentPage}
+  filter={<FilterComponent />}
+  onPaginationChange={handlePaginationChange}
+  pages={totalPages}
+  title={`'${entityName}' List`}
+  isLoading={loading}
+>
+  {data.map((item) => (
+    <EntityItem key={item.id} data={item} />
+  )}
+</EntityPage>
+
+ */
 export function EntityPage({
   currentPage,
   filter,

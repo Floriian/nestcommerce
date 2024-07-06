@@ -3,7 +3,7 @@ import { useGetCategoriesQuery } from "../category.api";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "~app/store";
 import { CategoryFilter, useCategoryFilter } from "./categoryfilter";
-import { EntityPage } from "~components/layout";
+import { EntityPage } from "~features/entity";
 
 export function CategoryPage() {
   const [page, setPage] = useState<number | undefined>(0);
