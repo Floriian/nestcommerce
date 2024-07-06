@@ -2,19 +2,20 @@ import { CategoryTable } from "./CategoryTable";
 import { useGetCategoriesQuery } from "../category.api";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "~app/store";
-import { CategoryFilter, useCategoryFilter } from "./categoryfilter";
 import { EntityPage } from "~features/entity";
+import { EntityFilter } from "~components/common";
 
 export function CategoryPage() {
-  const [page, setPage] = useState<number | undefined>(0);
-  const categoryFilter = useCategoryFilter();
+  const [name, setName] = useState<string>("");
+  const [active, setActive] = useState<boolean | "ALL">("ALL");
+  const [page, setPage] = useState<number | undefined>(1);
 
   const limit = useAppSelector((state) => state.filter.limit);
-  const { data, isLoading, refetch } = useGetCategoriesQuery({
+  const { data, isLoading, refetch, isUninitialized } = useGetCategoriesQuery({
     page: page ? page : 1,
     limit,
-    text: categoryFilter.searchText,
-    active: categoryFilter.active,
+    text: name,
+    active,
   });
 
   const handlePaginationClick = (page: number) => {
@@ -23,21 +24,25 @@ export function CategoryPage() {
   };
 
   useEffect(() => {
-    const timeOut = setTimeout(() => {
-      refetch();
-    }, 500);
-
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [categoryFilter.active, categoryFilter.searchText, refetch]);
+    refetch();
+  }, [name, active, page, refetch]);
 
   useEffect(() => setPage(data?.page), [data?.page]);
   useEffect(() => console.log(page), [page]);
 
   return (
     <EntityPage
-      filter={<CategoryFilter />}
+      filter={
+        <EntityFilter
+          active={active}
+          entity="category"
+          isUninitialized={isUninitialized}
+          onActiveChange={(val) => setActive(val)}
+          onInputChange={(val) => setName(val)}
+          refetch={refetch}
+          searchTextField={name}
+        />
+      }
       currentPage={page}
       onPaginationChange={handlePaginationClick}
       isLoading={isLoading}

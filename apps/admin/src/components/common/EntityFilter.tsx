@@ -8,27 +8,31 @@ import {
   Paper,
   Select,
 } from "@mui/material";
-import { Add } from "@mui/icons-material";
 import { useNavigate } from "@tanstack/react-router";
+import { Add } from "@mui/icons-material";
 import { LimitFilter } from "~features/filter";
-import { useCategoryFilter, useCategoryFilterDispatch } from "./hooks";
-import type { ActiveOptions } from "~features/category/types";
-import { ACTIVE_OPTIONS } from "~features/category/constants";
+import { ACTIVE_OPTIONS } from "./constants";
 
-export function CategoryFilter() {
-  const categoryFilter = useCategoryFilter();
-  const dispatch = useCategoryFilterDispatch();
+interface Props {
+  entity: string;
+  searchTextField: string;
+  refetch: () => void;
+  active: boolean | "ALL";
+  onInputChange: (value: string) => void;
+  onActiveChange: (value: boolean | "ALL") => void;
+  isUninitialized: boolean;
+}
 
+export function EntityFilter({
+  entity,
+  onInputChange,
+  onActiveChange,
+  searchTextField,
+  active,
+}: Props) {
   const navigate = useNavigate();
-  const handleClick = () => navigate({ to: "/category/new" });
+  const handleClick = () => navigate({ to: `/${entity}/new` });
 
-  const handleSearchTextChange = (value: string) => {
-    dispatch({ action: "setSearchText", payload: { searchText: value } });
-  };
-
-  const handleActiveChange = (value: ActiveOptions) => {
-    dispatch({ action: "setActive", payload: { active: value } });
-  };
   return (
     <Paper
       sx={{
@@ -39,8 +43,8 @@ export function CategoryFilter() {
       }}
     >
       <Input
-        value={categoryFilter.searchText}
-        onChange={(e) => handleSearchTextChange(e.target.value)}
+        value={searchTextField}
+        onChange={(e) => onInputChange(e.target.value)}
       />
       <Box sx={{ display: "flex", gap: "0.5rem", width: "30%" }}>
         <LimitFilter />
@@ -48,13 +52,12 @@ export function CategoryFilter() {
         <FormControl fullWidth>
           <InputLabel>Active</InputLabel>
           <Select
-            value={categoryFilter.active}
+            value={active}
             label="Active"
-            onChange={(e) =>
-              handleActiveChange(e.target.value as ActiveOptions)
-            }
+            onChange={(e) => onActiveChange(e.target.value as boolean | "ALL")}
           >
             {ACTIVE_OPTIONS.map((active, index) => (
+              //@ts-expect-error this is works.
               <MenuItem value={active.value} key={index}>
                 {active.text}
               </MenuItem>
