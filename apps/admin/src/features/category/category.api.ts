@@ -2,7 +2,8 @@ import { api } from "~app";
 import { SuccessResponse } from "~types/SuccessResponse";
 import { PaginationResponse } from "~types/PaginationResponse";
 import { createUrlQuery } from "~utils/createUrlQuery";
-import { ActiveOptions, Category } from "./types";
+import { Category } from "./category.schema";
+import { ActiveOptions } from "~types/ActiveOptions";
 
 export const categoryApi = api.injectEndpoints({
   endpoints: (builder) => ({

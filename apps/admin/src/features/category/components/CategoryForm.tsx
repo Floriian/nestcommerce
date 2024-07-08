@@ -1,5 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CategorySchema, categorySchema } from "../category.schema";
+import {
+  CreateOrEditCategoryDTO,
+  createOrEditCategorySchema,
+} from "../category.schema";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import {
@@ -17,17 +20,17 @@ import {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
 } from "../category.api";
-import { Category } from "../types";
 
 interface Props {
-  formData: Category | undefined;
+  formData: CreateOrEditCategoryDTO | undefined;
 }
 
 export function CategoryForm({ formData }: Props) {
-  const { handleSubmit, control, reset, register } = useForm<CategorySchema>({
-    resolver: zodResolver(categorySchema),
-    defaultValues: formData ? formData : { name: "", active: true },
-  });
+  const { handleSubmit, control, reset, register } =
+    useForm<CreateOrEditCategoryDTO>({
+      resolver: zodResolver(createOrEditCategorySchema),
+      defaultValues: formData ? formData : { name: "", active: true },
+    });
 
   const [updateCategory, { isLoading: updateCategoryIsLoading }] =
     useUpdateCategoryMutation();
@@ -36,12 +39,11 @@ export function CategoryForm({ formData }: Props) {
 
   const buttonDisabled = createCategoryIsLoading || updateCategoryIsLoading;
 
-  const onSubmit: SubmitHandler<CategorySchema> = async (data) => {
-    console.log("submitting");
+  const onSubmit: SubmitHandler<CreateOrEditCategoryDTO> = async (data) => {
     if (data._id) {
-      await updateCategory(data as unknown as Category);
+      await updateCategory(data as unknown as CreateOrEditCategoryDTO);
     } else {
-      await createCategory(data as unknown as Category);
+      await createCategory(data as unknown as CreateOrEditCategoryDTO);
     }
   };
 

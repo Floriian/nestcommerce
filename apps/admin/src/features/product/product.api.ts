@@ -20,11 +20,11 @@ export const productApi = api.injectEndpoints({
       }),
       providesTags: ["product"],
     }),
-    getProduct: builder.query<Product, { id: number }>({
+    getProduct: builder.query<Product, { id: string }>({
       query: ({ id }) => ({ method: "GET", url: `/product/admin/${id}` }),
       providesTags: ["product"],
     }),
   }),
 });
 
-export const { useGetProductsQuery, useLazyGetProductsQuery } = productApi;
+export const { useGetProductsQuery, useGetProductQuery } = productApi;
